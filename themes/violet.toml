@@ -1,66 +1,65 @@
 # Violet
 #
-# Derived from a wallpaper: a near-black field with terracotta and warm
-# sand. The seeds were #111016 (background), #D3685B (accent), #90363B
-# (danger) and #c3c3c4 (text); the surface ramp and text ramp below were
-# generated from them and are written out in full.
+# Iris #c4a7e7 as the accent, on Rose Pine's dark ramp. Mapped from this
+# machine's rofi and kitty configs, following what each colour means in
+# them rather than how it looks: rofi highlights its selected row with
+# iris, so iris is the accent; pine #31748f is main-br in rofi and
+# active_border_color in kitty, so it is a border.
 #
-# The wallpaper is warm end to end, so every colour in it lands within
-# ~20 degrees of the accent. The playhead and out-point -- the two marks
-# that must never be confused with the selection -- are therefore cool,
-# against the image's own palette. A red playhead over a terracotta
-# selection is invisible, and a marker that cannot be seen on the range
-# being trimmed has failed at its only job.
+# Two values are not from the source files. Pine as a *fill* measures
+# 2.91:1 on this panel, under the 3:1 floor, so it stays a border.
+# control_track_off is #8b87a3 rather than kitty's muted #6e6a86, which
+# manages only 2.03:1 against the card an off switch is drawn on.
 
 [dark]
 
 # Surfaces
-canvas               = "#14131a"
-surface              = "#1f1e29"
-surface_raised       = "#322f40"
-surface_sunken       = "#0f0f14"
-surface_sunken_alt   = "#0b0a0e"
+canvas               = "#191724"
+surface              = "#26233a"
+surface_raised       = "#403d52"
+surface_sunken       = "#1f1d2e"
+surface_sunken_alt   = "#191724"
 letterbox            = "#000000"
 
 # Structure
-border               = "#363346"
-border_raised        = "#49445e"
+border               = "#31748f"
+border_raised        = "#403d52"
 
-# Accent: the terracotta the image is built on
-accent               = "#d3685b"
-accent_hover         = "#db857b"
-on_accent            = "#0d0c11"
-accent_tint_bg       = "#392421"
-accent_tint_text     = "#d2675a"
+# Accent: rofi's selection pair, kept together
+accent               = "#c4a7e7"
+accent_hover         = "#d4bdf0"
+on_accent            = "#191724"
+accent_tint_bg       = "#2f2a45"
+accent_tint_text     = "#c4a7e7"
 
 # Controls
 control_knob         = "#ffffff"
-control_track_off    = "#7d798d"
+control_track_off    = "#8b87a3"
 
 # Text
-text_primary         = "#c3c3c4"
-text_secondary       = "#88859a"
-text_secondary_alt   = "#aaa7b6"
-text_muted           = "#88859a"
-text_muted_alt       = "#77738b"
-surface_hover        = "#2b2838"
+text_primary         = "#e0def4"
+text_secondary       = "#908caa"
+text_secondary_alt   = "#c4c0d8"
+text_muted           = "#908caa"
+text_muted_alt       = "#6e6a86"
+surface_hover        = "#302d44"
 
 # Semantic
-success              = "#39c568"
-danger               = "#d76269"
-origin_mark          = "#aaa7b6"
+success              = "#9ccfd8"
+danger               = "#eb6f92"
+origin_mark          = "#c4c0d8"
 
 # Stage: drawn on or beside the picture
-trim_track           = "#0d0c11"
-trim_range_fill      = "#d3685b"
-trim_range_edge      = "#ffffff"
-trim_range_excluded  = "#ffffff0f"
-playhead             = "#6fc7e0"
-mute                 = "#6fc7e0"
-trim_out             = "#c8e04f"
-trim_out_hover       = "#d7e97a"
-stage_badge_text     = "#ffffff"
-stage_badge_text_dim = "#c6c6c6"
-stage_shadow         = "#0000008c"
-waveform             = "#4d4964"
-mute_border          = "#592b2d"
+trim_track           = "#191724"
+trim_range_fill      = "#c4a7e7"
+trim_range_edge      = "#e0def4"
+trim_range_excluded  = "#ffffff11"
+playhead             = "#eb6f92"
+mute                 = "#eb6f92"
+trim_out             = "#f6c177"
+trim_out_hover       = "#f9d49c"
+stage_badge_text     = "#e0def4"
+stage_badge_text_dim = "#908caa"
+stage_shadow         = "#19172480"
+waveform             = "#403d52"
+mute_border          = "#6e3a4d"

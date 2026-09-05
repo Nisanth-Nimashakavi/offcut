@@ -210,7 +210,7 @@ fn shipped_themes_dir() -> Option<PathBuf> {
 /// worse first run than one that starts plain. These are examples placed
 /// where the picker can see them, nothing more.
 ///
-/// It never overwrites. A user who edited `wall.toml` keeps their
+/// It never overwrites. A user who edited `violet.toml` keeps their
 /// version; a user who deleted it keeps it deleted, because the marker
 /// below records that the seeding already happened.
 fn seed_example_themes() {
