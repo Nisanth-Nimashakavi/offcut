@@ -1,30 +1,66 @@
-# Violet: derived from a wallpaper.
+# Violet
 #
-# `[wallpaper]` takes the colours you read off an image and generates all
-# 37 roles from them. `background` and `accent` are the only required
-# seeds; the rest refine the marks drawn on the picture.
+# Derived from a wallpaper: a near-black field with terracotta and warm
+# sand. The seeds were #111016 (background), #D3685B (accent), #90363B
+# (danger) and #c3c3c4 (text); the surface ramp and text ramp below were
+# generated from them and are written out in full.
 #
-# These names are seeds, not palette roles, which is why they live under
-# [wallpaper] rather than [dark]. Under [dark] the app reports
-# `background` and `text` as unknown roles, because there are no roles by
-# those names -- the surface ramp and text ramp are generated.
-
-[wallpaper]
-background = "#111016"   # the near-black field
-accent     = "#D3685B"   # the terracotta the image is built on
-danger     = "#90363B"   # deep red
-success    = "#654847"   # a brown; ignored, since it is not a green
-text       = "#c3c3c4"   # the light grey in the image
-
 # The wallpaper is warm end to end, so every colour in it lands within
-# ~20 degrees of the accent. The two marks that must never be confused
-# with the selection move instead; the accent keeps the image's colour.
-[dark]
-playhead = "#6fc7e0"   # 173 degrees from the accent, 10.1:1 on the well
-mute     = "#6fc7e0"
-trim_out = "#c8e04f"   # 64 degrees from the accent, 123 from the playhead
+# ~20 degrees of the accent. The playhead and out-point -- the two marks
+# that must never be confused with the selection -- are therefore cool,
+# against the image's own palette. A red playhead over a terracotta
+# selection is invisible, and a marker that cannot be seen on the range
+# being trimmed has failed at its only job.
 
-[light]
-playhead = "#6fc7e0"
-mute     = "#6fc7e0"
-trim_out = "#c8e04f"
+[dark]
+
+# Surfaces
+canvas               = "#14131a"
+surface              = "#1f1e29"
+surface_raised       = "#322f40"
+surface_sunken       = "#0f0f14"
+surface_sunken_alt   = "#0b0a0e"
+letterbox            = "#000000"
+
+# Structure
+border               = "#363346"
+border_raised        = "#49445e"
+
+# Accent: the terracotta the image is built on
+accent               = "#d3685b"
+accent_hover         = "#db857b"
+on_accent            = "#0d0c11"
+accent_tint_bg       = "#392421"
+accent_tint_text     = "#d2675a"
+
+# Controls
+control_knob         = "#ffffff"
+control_track_off    = "#7d798d"
+
+# Text
+text_primary         = "#c3c3c4"
+text_secondary       = "#88859a"
+text_secondary_alt   = "#aaa7b6"
+text_muted           = "#88859a"
+text_muted_alt       = "#77738b"
+surface_hover        = "#2b2838"
+
+# Semantic
+success              = "#39c568"
+danger               = "#d76269"
+origin_mark          = "#aaa7b6"
+
+# Stage: drawn on or beside the picture
+trim_track           = "#0d0c11"
+trim_range_fill      = "#d3685b"
+trim_range_edge      = "#ffffff"
+trim_range_excluded  = "#ffffff0f"
+playhead             = "#6fc7e0"
+mute                 = "#6fc7e0"
+trim_out             = "#c8e04f"
+trim_out_hover       = "#d7e97a"
+stage_badge_text     = "#ffffff"
+stage_badge_text_dim = "#c6c6c6"
+stage_shadow         = "#0000008c"
+waveform             = "#4d4964"
+mute_border          = "#592b2d"
