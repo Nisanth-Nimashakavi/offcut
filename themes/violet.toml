@@ -1,0 +1,30 @@
+# Violet: derived from a wallpaper.
+#
+# `[wallpaper]` takes the colours you read off an image and generates all
+# 37 roles from them. `background` and `accent` are the only required
+# seeds; the rest refine the marks drawn on the picture.
+#
+# These names are seeds, not palette roles, which is why they live under
+# [wallpaper] rather than [dark]. Under [dark] the app reports
+# `background` and `text` as unknown roles, because there are no roles by
+# those names -- the surface ramp and text ramp are generated.
+
+[wallpaper]
+background = "#111016"   # the near-black field
+accent     = "#D3685B"   # the terracotta the image is built on
+danger     = "#90363B"   # deep red
+success    = "#654847"   # a brown; ignored, since it is not a green
+text       = "#c3c3c4"   # the light grey in the image
+
+# The wallpaper is warm end to end, so every colour in it lands within
+# ~20 degrees of the accent. The two marks that must never be confused
+# with the selection move instead; the accent keeps the image's colour.
+[dark]
+playhead = "#6fc7e0"   # 173 degrees from the accent, 10.1:1 on the well
+mute     = "#6fc7e0"
+trim_out = "#c8e04f"   # 64 degrees from the accent, 123 from the playhead
+
+[light]
+playhead = "#6fc7e0"
+mute     = "#6fc7e0"
+trim_out = "#c8e04f"
