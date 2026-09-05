@@ -109,17 +109,48 @@ background = "#111016"   # what your wallpaper mostly is
 accent     = "#D3685B"   # what stands out of it
 ```
 
-Saved themes go in `~/.config/offcut/themes/<name>.toml` and are switched from
-the menu; the choice persists across launches.
+### Where themes live
 
-Two example themes ship with the app and are copied into that directory the
-**first time you run it**, so they appear in the menu without any setup. A
-package cannot do this at install time — it runs as root with no user and no
-`HOME` — so the app does it on first launch instead, as you.
+| | |
+|---|---|
+| `/usr/share/offcut/themes/` | what the package installs: read-only, system-wide |
+| `~/.config/offcut/themes/` | yours, editable, what the menu lists |
 
-It copies once and records that it did. Editing an example keeps your version;
-deleting one keeps it deleted. Nothing is selected automatically: a fresh
-install starts on the built-in palette, not on someone else's colour scheme.
+Four themes ship with the app — `dark`, `light`, `rose-pine-moon` and
+`violet` — and are copied into your config directory the **first time you run
+it**, so they appear in the menu without any setup.
+
+A package cannot write your config at install time: it runs as root, with no
+user and no `HOME`. So the app does it on first launch, as you. On Flatpak the
+source is `/app/share/offcut/themes/`; an AppImage carries its own copy inside
+the image.
+
+It copies once and records that it did, so editing a theme keeps your version
+and deleting one keeps it deleted.
+
+### Making your own
+
+Copy any of them and edit:
+
+```bash
+cp ~/.config/offcut/themes/dark.toml ~/.config/offcut/themes/mine.toml
+```
+
+`dark.toml` is the app's default palette written out in full, so it is the
+useful starting point: every role is present with the value the app would have
+used anyway. Change one line or all 37.
+
+Or start from a wallpaper instead of listing roles, and let the app generate
+the rest:
+
+```toml
+[wallpaper]
+background = "#0d1117"   # what the image mostly is
+accent     = "#58a6ff"   # what stands out of it
+```
+
+New files appear in the menu on the next launch. Nothing is selected
+automatically.
 
 A contrast reading runs on whatever you load and reports controls that would be
 invisible — it warns, it does not override your choice.
