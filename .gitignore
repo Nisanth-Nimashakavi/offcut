@@ -6,3 +6,6 @@ dist/
 .cargo-home/
 .gst-local/
 .tmp-*/
+
+# Downloaded build tools
+.tools/
