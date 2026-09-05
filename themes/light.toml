@@ -1,0 +1,114 @@
+# Light
+#
+# The same arrangement on light surfaces, for working in daylight.
+#
+# The stage does not follow. `letterbox`, `trim_track` and every mark
+# drawn on the picture stay dark, because the footage did not change when
+# the panels did -- a red playhead on a light grey track measures 1.66:1
+# and is a handle nobody can see.
+
+[dark]
+
+# Surfaces
+canvas               = "#ececee"
+surface              = "#f5f5f7"
+surface_raised       = "#ffffff"
+surface_sunken       = "#e2e2e5"
+surface_sunken_alt   = "#d8d8db"
+letterbox            = "#000000"
+
+# Structure
+border               = "#d6d6d9"
+border_raised        = "#c6c6c8"
+
+# Accent
+accent               = "#0071e3"
+accent_hover         = "#005fc4"
+on_accent            = "#ffffff"
+accent_tint_bg       = "#e3effc"
+accent_tint_text     = "#0058b0"
+
+# Controls
+control_knob         = "#ffffff"
+control_track_off    = "#7c7c84"
+
+# Text
+text_primary         = "#1d1d1f"
+text_secondary       = "#5e5e63"
+text_secondary_alt   = "#48484d"
+text_muted           = "#6e6e73"
+text_muted_alt       = "#86868b"
+surface_hover        = "#e8e8eb"
+
+# Semantic
+success              = "#248a3d"
+danger               = "#d70015"
+origin_mark          = "#2c2c2e"
+
+# Stage: drawn on or beside the picture
+trim_track           = "#151515"
+trim_range_fill      = "#0a6fd8"
+trim_range_edge      = "#ffffff"
+trim_range_excluded  = "#ffffff0f"
+playhead             = "#ff453a"
+mute                 = "#ff453a"
+trim_out             = "#ffd426"
+trim_out_hover       = "#ffe066"
+stage_badge_text     = "#ffffff"
+stage_badge_text_dim = "#c8c8c8"
+stage_shadow         = "#0000008c"
+waveform             = "#b4b4b8"
+mute_border          = "#f0c6c9"
+
+[light]
+
+# Surfaces
+canvas               = "#ececee"
+surface              = "#f5f5f7"
+surface_raised       = "#ffffff"
+surface_sunken       = "#e2e2e5"
+surface_sunken_alt   = "#d8d8db"
+letterbox            = "#000000"
+
+# Structure
+border               = "#d6d6d9"
+border_raised        = "#c6c6c8"
+
+# Accent
+accent               = "#0071e3"
+accent_hover         = "#005fc4"
+on_accent            = "#ffffff"
+accent_tint_bg       = "#e3effc"
+accent_tint_text     = "#0058b0"
+
+# Controls
+control_knob         = "#ffffff"
+control_track_off    = "#7c7c84"
+
+# Text
+text_primary         = "#1d1d1f"
+text_secondary       = "#5e5e63"
+text_secondary_alt   = "#48484d"
+text_muted           = "#6e6e73"
+text_muted_alt       = "#86868b"
+surface_hover        = "#e8e8eb"
+
+# Semantic
+success              = "#248a3d"
+danger               = "#d70015"
+origin_mark          = "#2c2c2e"
+
+# Stage: drawn on or beside the picture
+trim_track           = "#151515"
+trim_range_fill      = "#0a6fd8"
+trim_range_edge      = "#ffffff"
+trim_range_excluded  = "#ffffff0f"
+playhead             = "#ff453a"
+mute                 = "#ff453a"
+trim_out             = "#ffd426"
+trim_out_hover       = "#ffe066"
+stage_badge_text     = "#ffffff"
+stage_badge_text_dim = "#c8c8c8"
+stage_shadow         = "#0000008c"
+waveform             = "#b4b4b8"
+mute_border          = "#f0c6c9"

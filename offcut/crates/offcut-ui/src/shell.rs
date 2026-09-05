@@ -1615,7 +1615,16 @@ fn theme_row<'a>(theme: &crate::rice::Riced, palette: Palette) -> Element<'a, Sh
         })
     };
 
-    rows = rows.push(option("Built-in".into(), None, theme.name.is_none(), palette));
+    // # No "Built-in" row
+    //
+    // The default palette ships as `dark.toml` like every other theme, so
+    // it appears in this list by name rather than as a special entry
+    // meaning "none of the above". A picker whose first row is a
+    // different kind of thing from the rest invites the question of what
+    // it does differently; here, nothing does.
+    //
+    // The fallback still exists in `rice::load` for the case where no
+    // theme file is present at all, but it is not something to choose.
     for name in saved {
         let active = theme.name.as_deref() == Some(name.as_str());
         rows = rows.push(option(name.clone(), Some(name), active, palette));

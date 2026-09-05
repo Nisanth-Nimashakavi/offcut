@@ -1,0 +1,62 @@
+# Dark
+#
+# Offcut's default: a neutral near-black ramp with one system blue.
+# Deliberately uncoloured -- next to a true-black stage, any cast in the
+# surrounding chrome reads as a colour error in the picture itself.
+#
+# This is the palette the app falls back to when no theme is selected. It
+# is written out here so it can be copied and edited like any other
+# theme, rather than being a special case you cannot see.
+
+[dark]
+
+# Surfaces
+canvas               = "#1a1a1a"
+surface              = "#252525"
+surface_raised       = "#2f2f2f"
+surface_sunken       = "#151515"
+surface_sunken_alt   = "#0d0d0d"
+letterbox            = "#000000"
+
+# Structure
+border               = "#383838"
+border_raised        = "#4a4a4a"
+
+# Accent
+accent               = "#0a6fd8"
+accent_hover         = "#2b85ea"
+on_accent            = "#ffffff"
+accent_tint_bg       = "#142a42"
+accent_tint_text     = "#6fb6ff"
+
+# Controls
+control_knob         = "#ffffff"
+control_track_off    = "#7a7a80"
+
+# Text
+text_primary         = "#ffffff"
+text_secondary       = "#a8a8ad"
+text_secondary_alt   = "#c0c0c5"
+text_muted           = "#909095"
+text_muted_alt       = "#78787d"
+surface_hover        = "#3a3a3a"
+
+# Semantic
+success              = "#30d158"
+danger               = "#ff453a"
+origin_mark          = "#b8b8bd"
+
+# Stage: drawn on or beside the picture
+trim_track           = "#151515"
+trim_range_fill      = "#0a6fd8"
+trim_range_edge      = "#ffffff"
+trim_range_excluded  = "#ffffff0f"
+playhead             = "#ff453a"
+mute                 = "#ff453a"
+trim_out             = "#ffd426"
+trim_out_hover       = "#ffe066"
+stage_badge_text     = "#ffffff"
+stage_badge_text_dim = "#c8c8c8"
+stage_shadow         = "#0000008c"
+waveform             = "#5e5e63"
+mute_border          = "#5e2a25"

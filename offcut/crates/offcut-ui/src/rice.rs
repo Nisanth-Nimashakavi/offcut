@@ -214,9 +214,7 @@ fn shipped_themes_dir() -> Option<PathBuf> {
 /// version; a user who deleted it keeps it deleted, because the marker
 /// below records that the seeding already happened.
 fn seed_example_themes() {
-    let (Some(dest), Some(src)) = (themes_dir(), shipped_themes_dir()) else {
-        return;
-    };
+    let Some(dest) = themes_dir() else { return };
     // One marker rather than per-file existence checks: deleting an
     // example is a decision, and restoring it on the next launch would
     // override that decision every time.
@@ -230,6 +228,13 @@ fn seed_example_themes() {
     if std::fs::create_dir_all(&dest).is_err() {
         return;
     }
+    // The marker is written even when there is nothing to copy: a source
+    // build has no installed prefix, and retrying the search on every
+    // launch is work that can never succeed.
+    let Some(src) = shipped_themes_dir() else {
+        let _ = std::fs::write(&marker, "");
+        return;
+    };
     if let Ok(entries) = std::fs::read_dir(&src) {
         for e in entries.filter_map(Result::ok) {
             let from = e.path();
