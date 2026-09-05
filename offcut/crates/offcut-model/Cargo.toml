@@ -1,0 +1,12 @@
+[package]
+name = "offcut-model"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Pure, GPU/I/O-free edit model: Project, Clip, rational time, edit ops, undo. Every operation here is unit-testable without a GStreamer or wgpu context."
+
+[dependencies]
+serde.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]

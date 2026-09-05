@@ -1,0 +1,26 @@
+[package]
+name = "offcut-render"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "wgpu texture bridge: uploads decoded offcut-engine Frames as textures. DMABUF zero-copy import (PLAN.md §5.3) is the target; this crate's fallback (staging-buffer write_texture) path is what's built and tested so far -- see lib.rs."
+
+[dependencies]
+offcut-engine = { path = "../offcut-engine" }
+# Promoted from dev-dependencies: `effects.rs` translates the model's own
+# CropTransform/AdjustSettings into the shader uniform, so the model is
+# part of this crate's real API surface now, not just its tests.
+offcut-model = { path = "../offcut-model" }
+wgpu = "27.0.1"
+# iced_wgpu, not a direct `iced` dependency: this crate needs only the
+# `Primitive`/`Pipeline` traits and `wgpu`/`core`/`graphics` re-exports to
+# implement the on-screen video preview (preview.rs) -- pulling in all of
+# `iced` (fonts, widgets, the application runtime) here would be a layering
+# violation offcut-ui exists specifically to avoid. Same pinned wgpu 27.0.1
+# as the plain `wgpu` dependency above, so the two share one type identity
+# in the resolved dependency graph -- not two incompatible wgpu instances.
+iced_wgpu = "0.14.0"
+thiserror.workspace = true
+
+[dev-dependencies]
+pollster = "0.4"

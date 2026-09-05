@@ -1,0 +1,4 @@
+/target
+# Cargo.lock is committed deliberately: offcut-app is a binary, not a
+# library, so a reproducible dependency graph matters more than lockstep
+# with downstream consumers' resolvers.

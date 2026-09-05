@@ -1,0 +1,56 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/offcut-model",
+    "crates/offcut-project",
+    "crates/offcut-engine",
+    "crates/offcut-render",
+    "crates/offcut-export",
+    "crates/offcut-ui",
+    "crates/offcut-app",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+
+[workspace.dependencies]
+serde = { version = "1.0.229", features = ["derive"] }
+ron = "0.12.2"
+thiserror = "2"
+
+# A debug build of this app is genuinely unusable — not slow, unusable.
+# The whole stack it leans on (wgpu tessellation, cosmic-text shaping,
+# resvg rasterization, GStreamer's Rust bindings) is generic-heavy code
+# that relies on inlining, and at `opt-level = 0` none of it happens.
+# Scrubbing was visibly laggy for exactly this reason before these
+# profiles existed.
+#
+# `opt-level = 2` for dependencies keeps `cargo build` fast for iteration
+# while making the *frame path* fast, because that path is almost entirely
+# dependency code. Offcut's own crates stay at the debug default so
+# backtraces and stepping still work.
+[profile.dev.package."*"]
+opt-level = 2
+
+# The render/decode path specifically, even in a debug build.
+[profile.dev.package.wgpu]
+opt-level = 3
+[profile.dev.package.wgpu-core]
+opt-level = 3
+[profile.dev.package.wgpu-hal]
+opt-level = 3
+[profile.dev.package.lyon_tessellation]
+opt-level = 3
+[profile.dev.package.cosmic-text]
+opt-level = 3
+[profile.dev.package.resvg]
+opt-level = 3
+[profile.dev.package.tiny-skia]
+opt-level = 3
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 4

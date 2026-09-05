@@ -1,0 +1,13 @@
+[package]
+name = "offcut-ui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Widgets: Timeline, Filmstrip, Scrubber, ToolRail, and the video-preview custom widget that samples a wgpu texture inside iced's own render pass. PLAN.md crate layout."
+
+[dependencies]
+offcut-model = { path = "../offcut-model" }
+offcut-engine = { path = "../offcut-engine" }
+offcut-render = { path = "../offcut-render" }
+offcut-export = { path = "../offcut-export" }
+iced = { version = "0.14.0", features = ["advanced", "canvas", "image-without-codecs", "svg", "wgpu"] }

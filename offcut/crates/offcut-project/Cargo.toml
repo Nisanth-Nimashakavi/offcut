@@ -1,0 +1,12 @@
+[package]
+name = "offcut-project"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "RON (human-readable, non-destructive) .offcut project file load/save and path relinking. PLAN.md crate layout."
+
+[dependencies]
+offcut-model = { path = "../offcut-model" }
+serde.workspace = true
+ron.workspace = true
+thiserror.workspace = true

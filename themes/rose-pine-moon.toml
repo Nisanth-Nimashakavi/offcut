@@ -1,0 +1,86 @@
+# Rosé Pine — mapped from this machine's rofi and kitty configs.
+#
+# The mapping follows what each colour MEANS in those files, not what it
+# looks like:
+#
+#   rofi  select-bg / select-fg  #c4a7e7 on #191724  -> selection, so accent
+#   rofi  main-br, kitty active_border_color #31748f -> borders
+#   rofi  main-bg, kitty color0 / active_tab #26233a -> panels
+#   kitty background            #191724              -> the window ground
+#   kitty selection_background  #403d52              -> raised surfaces
+#   kitty color1 (red)          #eb6f92              -> attention
+#   kitty color3 (yellow)       #f6c177              -> the out-point
+#
+# The accent is iris rather than pine because iris is what this desktop
+# already uses to mean "this one is selected" — rofi highlights with it.
+# Pine is a *border* colour here (rofi main-br, kitty active_border), and
+# it is used as one below. It also measures 2.91:1 as a fill on the panel,
+# under the 3:1 floor, so the semantic reading and the measurement agree.
+#
+# Alpha from the source files is dropped where Offcut paints opaque
+# surfaces: rofi's main-bg is #26233ae6 over a blurred desktop, and this
+# application composites nothing behind its panels.
+
+[dark]
+
+# ---- Surfaces: kitty's own ramp ----
+canvas             = "#191724"
+surface            = "#26233a"
+surface_raised     = "#403d52"
+surface_sunken     = "#1f1d2e"
+surface_sunken_alt = "#191724"
+
+# True black around the picture in every theme: a tinted surround reads
+# as a colour cast in the footage itself.
+letterbox          = "#000000"
+
+# Pine, used as the border colour both source files use it for.
+border             = "#31748f"
+border_raised      = "#403d52"
+
+# ---- Accent: rofi's selection pair, kept together ----
+# 7.25:1 on the panel, and their own select-fg on it measures 8.43:1.
+accent             = "#c4a7e7"
+accent_hover       = "#d4bdf0"
+on_accent          = "#191724"
+accent_tint_bg     = "#2f2a45"
+accent_tint_text   = "#c4a7e7"
+
+# ---- Text: kitty's foreground ramp ----
+text_primary       = "#e0def4"
+text_secondary     = "#908caa"
+text_secondary_alt = "#c4c0d8"
+text_muted         = "#908caa"
+text_muted_alt     = "#6e6a86"
+surface_hover      = "#302d44"
+
+# ---- Controls ----
+# `control_track_off` is an off switch's whole visible body and every
+# slider's unfilled remainder, so it must clear 3:1 against the card AND
+# carry the knob. kitty's muted #6e6a86 gives only 2.03:1 on #403d52.
+# This is a half-step lighter: 3.03:1 on the card, 3.45:1 under the knob.
+control_knob       = "#ffffff"
+control_track_off  = "#8b87a3"
+
+# ---- Semantic ----
+# Foam is kitty's "blue" slot and is 78 deg from the iris accent, so
+# "finished" can never be misread as "selected". Love is kitty's red.
+success            = "#9ccfd8"
+danger             = "#eb6f92"
+origin_mark        = "#c4c0d8"
+
+# ---- Stage: drawn on or beside the picture ----
+trim_track           = "#191724"
+trim_range_fill      = "#c4a7e7"
+trim_range_edge      = "#e0def4"
+trim_range_excluded  = "#ffffff11"
+playhead             = "#eb6f92"
+mute                 = "#eb6f92"
+trim_out             = "#f6c177"
+trim_out_hover       = "#f9d49c"
+stage_badge_text     = "#e0def4"
+stage_badge_text_dim = "#908caa"
+stage_shadow         = "#19172480"
+
+waveform             = "#403d52"
+mute_border          = "#6e3a4d"

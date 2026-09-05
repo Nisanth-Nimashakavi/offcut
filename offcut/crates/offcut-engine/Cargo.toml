@@ -1,0 +1,16 @@
+[package]
+name = "offcut-engine"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "GStreamer pipeline, clock, seek, frame delivery. PLAN.md's Engine thread: owns the pipeline; UI thread never touches pixels (PLAN.md §2)."
+
+[dependencies]
+offcut-model = { path = "../offcut-model" }
+gstreamer = { version = "0.25.3", features = ["v1_28"] }
+gstreamer-app = "0.25.2"
+gstreamer-video = { version = "0.25.3", features = ["v1_28"] }
+# gst-discoverer lives here: reading a real file's true duration/fps/
+# resolution rather than hardcoding demo constants (see probe.rs).
+gstreamer-pbutils = "0.25"
+thiserror.workspace = true

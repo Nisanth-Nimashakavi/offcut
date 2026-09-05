@@ -1,0 +1,54 @@
+# Maintainer: nimnim111 <nimjnimj3@gmail.com>
+pkgname=offcut
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Trim a video and export it, without touching the original"
+arch=('x86_64')
+url="https://github.com/Nisanth-Nimashakavi/offcut"
+license=('MIT' 'Apache-2.0')
+
+# Runtime. The GStreamer split matters: `uridecodebin`, `qtdemux` and the
+# H.264 decoder live in different packages, and missing any one of them
+# gives a black frame rather than an error — which is why the app probes
+# for them at startup and says which is absent.
+depends=(
+  'gstreamer'
+  'gst-plugins-base'
+  'gst-plugins-good'   # qtdemux, the MP4 demuxer
+  'gst-plugins-ugly'   # x264enc, the shipping encoder
+  'gst-libav'          # avdec_h264, and the AAC encoder
+  'libglvnd'
+  'fontconfig'
+)
+makedepends=('rust' 'cargo' 'git')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+sha256sums=('SKIP')  # replace once a release tarball exists
+
+prepare() {
+  cd "$srcdir/$pkgname-$pkgver/offcut"
+  # Vendor into the source tree so makepkg's network sandbox is happy
+  # and the build is reproducible from the tarball alone.
+  export RUSTUP_TOOLCHAIN=stable
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver/offcut"
+  export RUSTUP_TOOLCHAIN=stable
+  export CARGO_TARGET_DIR=target
+  cargo build --frozen --release --bin offcut
+}
+
+check() {
+  cd "$srcdir/$pkgname-$pkgver/offcut"
+  export RUSTUP_TOOLCHAIN=stable
+  # The engine and export suites need real GStreamer elements, which are
+  # present as declared `depends` by this point.
+  cargo test --frozen --release
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+  ./packaging/install.sh "$pkgdir" /usr
+  install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+}

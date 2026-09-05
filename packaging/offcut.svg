@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The trim bar, which is the product: a dark well, a kept range in the
+  accent, and the two handles that bound it. Not a film reel or a
+  clapperboard — this app is not an NLE and should not borrow the
+  iconography of one.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="56" fill="#1A1A1A"/>
+  <!-- the well -->
+  <rect x="36" y="104" width="184" height="48" rx="16" fill="#151515"/>
+  <!-- the kept range -->
+  <rect x="86" y="104" width="104" height="48" rx="16" fill="#0A6FD8"/>
+  <!-- bounding rules, top and bottom of the range -->
+  <rect x="86" y="104" width="104" height="6" fill="#FFFFFF"/>
+  <rect x="86" y="146" width="104" height="6" fill="#FFFFFF"/>
+  <!-- in-point handle: white, on the range's leading edge -->
+  <circle cx="86" cy="128" r="22" fill="#FFFFFF"/>
+  <!-- out-point handle: amber, the pair's other half -->
+  <circle cx="190" cy="128" r="22" fill="#FFD426"/>
+</svg>

@@ -1,0 +1,25 @@
+[package]
+name = "offcut-app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "bin: iced Application, wiring, main(). PLAN.md crate layout — Phase 2 (Shell) is underway, see README."
+
+[[bin]]
+name = "offcut"
+path = "src/main.rs"
+
+[[bin]]
+name = "offcut-smoke"
+path = "src/smoke.rs"
+
+[dependencies]
+offcut-model = { path = "../offcut-model" }
+offcut-project = { path = "../offcut-project" }
+offcut-engine = { path = "../offcut-engine" }
+offcut-render = { path = "../offcut-render" }
+offcut-ui = { path = "../offcut-ui" }
+offcut-export = { path = "../offcut-export" }
+gstreamer = { version = "0.25.3", features = ["v1_28"] }
+iced = { version = "0.14.0", features = ["wgpu", "advanced", "canvas", "image-without-codecs", "svg", "tokio"] }
+rfd = "0.17.2"

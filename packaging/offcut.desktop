@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Offcut
+GenericName=Video Trimmer
+Comment=Trim a video and export it, without touching the original
+Exec=offcut %f
+Icon=offcut
+Terminal=false
+Categories=AudioVideo;Video;AudioVideoEditing;
+MimeType=video/mp4;video/quicktime;video/x-matroska;video/webm;video/x-msvideo;
+StartupNotify=true

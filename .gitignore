@@ -1,0 +1,8 @@
+# Build output
+offcut/target/
+dist/
+
+# Local development environment
+.cargo-home/
+.gst-local/
+.tmp-*/

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.offcut.Offcut</id>
+  <name>Offcut</name>
+  <summary>Trim a video and export it</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT OR Apache-2.0</project_license>
+  <description>
+    <p>
+      Offcut is a single-source video trimmer. Open a file, choose the piece
+      you want to keep, and export it. Your original file is never modified.
+    </p>
+    <p>
+      It does crop, straighten, speed, volume and tone adjustment on one
+      clip, and exports MP4, MOV, or MKV carrying H.264 or HEVC.
+    </p>
+  </description>
+  <launchable type="desktop-id">io.offcut.Offcut.desktop</launchable>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.1.0" date="2026-09-05">
+      <description><p>First test build.</p></description>
+    </release>
+  </releases>
+</component>

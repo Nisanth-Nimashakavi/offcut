@@ -1,0 +1,70 @@
+# Flatpak manifest.
+#
+#   flatpak-builder --user --install --force-clean build \
+#     packaging/flatpak/io.offcut.Offcut.yml
+#
+# The Freedesktop runtime already carries GStreamer and its base plugins,
+# which is most of what this app needs. `gst-plugins-ugly` (x264enc) and
+# `gst-libav` are NOT in it and are built here as modules — without them
+# the app opens files but cannot export, which its startup probe reports
+# rather than discovering mid-encode.
+id: io.offcut.Offcut
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+command: offcut
+
+build-options:
+  append-path: /usr/lib/sdk/rust-stable/bin
+  env:
+    CARGO_HOME: /run/build/offcut/cargo
+
+finish-args:
+  # A GPU when there is one; llvmpipe when there is not.
+  - --device=dri
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --socket=pulseaudio
+  # The file portal, not blanket filesystem access: the app opens what
+  # the user picks in a dialog and writes what they name. It has no
+  # business reading anything else, and its whole safety story is that it
+  # does not touch files it was not given.
+  - --filesystem=xdg-videos
+  - --filesystem=xdg-download
+
+modules:
+  # The two plugin sets the Freedesktop runtime does not carry. Without
+  # them the app opens files but cannot export — which its startup probe
+  # reports by name rather than discovering mid-encode.
+  #
+  # Checksums were fetched from the release server, not guessed. When
+  # bumping the version, run `packaging/flatpak/fetch-checksums.sh`
+  # rather than editing them by hand.
+  - name: gst-plugins-ugly
+    buildsystem: meson
+    config-opts:
+      - -Dx264=enabled
+      - -Dgpl=enabled
+    sources:
+      - type: archive
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.24.9.tar.xz
+        sha256: 4b6b30110f38cd05eb67422297142b75a55fe00003105f48b13603e6761cc3b6
+
+  - name: gst-libav
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.24.9.tar.xz
+        sha256: 32682e9ae508ee01f4fb134b3a520081e2ac007220997577624b1d16171d456c
+
+  - name: offcut
+    buildsystem: simple
+    build-commands:
+      - cd offcut && cargo build --release --offline --bin offcut
+      - ./packaging/install.sh /app /app
+    sources:
+      - type: dir
+        path: ../..
