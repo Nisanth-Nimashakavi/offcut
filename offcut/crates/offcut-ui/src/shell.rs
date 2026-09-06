@@ -2474,7 +2474,30 @@ fn shortcuts_sheet<'a>(palette: Palette) -> Element<'a, ShellMessage> {
     ]
     .spacing(20);
 
-    let panel = container(column![heading, iced::widget::scrollable(groups)].spacing(20))
+    // `width(Fill)` on the scrolled column, not just on the scrollable.
+    //
+    // A `scrollable` sizes its bar against the *content's* width, and
+    // nothing inside these rows fills: the key pill is a fixed 96px and
+    // the label is text. So the column shrank to its widest row and the
+    // bar was drawn at that edge -- floating in the middle of the panel,
+    // over the labels, instead of against the right side.
+    // The bar needs its own lane, or it lands on the labels.
+    //
+    // iced draws the scrollbar *inside* the scrollable's bounds rather
+    // than beside them, so a full-width column puts the rightmost text
+    // under it. 14px is the 10px scroller plus a hair of clearance.
+    const SCROLLBAR_LANE: f32 = 14.0;
+
+    let panel = container(
+        column![
+            heading,
+            iced::widget::scrollable(
+                container(groups.width(Length::Fill))
+                    .padding(iced::Padding::default().right(SCROLLBAR_LANE))
+            ),
+        ]
+        .spacing(20),
+    )
     .width(Length::Fixed(380.0))
     .padding(24)
     // # The sheet is scrollable and height-capped
