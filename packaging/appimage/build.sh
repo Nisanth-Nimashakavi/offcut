@@ -47,12 +47,33 @@ ldd "$ROOT/offcut/target/release/offcut" \
 
 # The plugin directory: the local prefix if this tree has one, else the
 # system's.
+# Every plugin directory, not the first one found.
+#
+# This used to `break` after the first hit, which on a machine with a
+# user-local prefix meant copying only that prefix -- 71 plugins that
+# looked like plenty, but without `coreelements`, `playback`,
+# `typefindfunctions` or `app`. Those are what `uridecodebin` is built
+# from, so the app started, drew its window, and then failed every open
+# with "could not probe media file". A partial plugin set is worse than
+# none: nothing warns, because the elements the startup probe checks for
+# were present.
 for dir in "$ROOT/.gst-local/root/usr/lib/gstreamer-1.0" \
            /usr/lib/gstreamer-1.0 /usr/lib64/gstreamer-1.0 \
            /usr/lib/x86_64-linux-gnu/gstreamer-1.0; do
   [ -d "$dir" ] || continue
   cp -Ln "$dir"/*.so "$APPDIR/usr/lib/gstreamer-1.0/" 2>/dev/null || true
-  break
+done
+
+# The plugins `uridecodebin` cannot work without. Absent any one of them
+# the failure is a probe error at open time, far from its cause, so it is
+# worth failing the build here instead.
+for required in coreelements typefindfunctions playback app isomp4 \
+                videoconvertscale audioconvert audioresample libav; do
+  if [ ! -e "$APPDIR/usr/lib/gstreamer-1.0/libgst${required}.so" ]; then
+    echo "build.sh: missing GStreamer plugin '${required}' -- the bundle" >&2
+    echo "          would start but fail to open any file." >&2
+    exit 1
+  fi
 done
 
 # # The plugin scanner
@@ -95,6 +116,26 @@ export GST_PLUGIN_SCANNER="$HERE/usr/lib/gstreamer-1.0/gst-plugin-scanner"
 # The example themes travel inside the image, so the first run can copy
 # them into the user's config the same way a distro package's do.
 export OFFCUT_SHIPPED_THEMES="$HERE/usr/share/offcut/themes"
+
+# # Drag-and-drop needs the X11 backend
+#
+# winit 0.30 implements file drops in its X11 backend only, and prefers
+# Wayland whenever WAYLAND_DISPLAY is set. XWayland serves the connection
+# and does support drops, so hiding the Wayland socket is what makes
+# dropping a file onto the window work at all. This mirrors run.sh.
+#
+# Opt out with OFFCUT_FORCE_WAYLAND=1 to keep the native backend, which
+# is sharper on HiDPI and cannot receive drops.
+x_is_live() {
+  case "${DISPLAY:-}" in
+    "") return 1 ;;
+    :*) n="${DISPLAY#:}"; n="${n%%.*}"; [ -S "/tmp/.X11-unix/X${n}" ] ;;
+    *)  return 1 ;;
+  esac
+}
+if [ -z "${OFFCUT_FORCE_WAYLAND:-}" ] && x_is_live; then
+  unset WAYLAND_DISPLAY WAYLAND_SOCKET
+fi
 
 # Same reasoning as run.sh: with no render node, naming the software
 # rasterizer skips a driver search that cannot succeed.
