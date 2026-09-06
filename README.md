@@ -10,19 +10,6 @@ speed, volume and tone. Exports MP4, MOV or MKV carrying H.264 or HEVC.
 
 ## Install
 
-### Arch (AUR)
-
-```bash
-yay -S offcut
-```
-
-### Flatpak
-
-```bash
-flatpak install --user offcut.flatpak
-flatpak run io.offcut.Offcut
-```
-
 ### AppImage
 
 ```bash
