@@ -22,7 +22,7 @@ depends=(
 )
 makedepends=('rust' 'cargo' 'git')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('SKIP')  # replace once a release tarball exists
+sha256sums=('dc3587196b3759a2156cb1e5e328a4897edf4591375533e0322398f58e43fd2b')
 
 prepare() {
   cd "$srcdir/$pkgname-$pkgver/offcut"

@@ -47,21 +47,62 @@ ldd "$ROOT/offcut/target/release/offcut" \
 
 # The plugin directory: the local prefix if this tree has one, else the
 # system's.
-# Every plugin directory, not the first one found.
+# # The plugin allowlist
 #
-# This used to `break` after the first hit, which on a machine with a
-# user-local prefix meant copying only that prefix -- 71 plugins that
-# looked like plenty, but without `coreelements`, `playback`,
-# `typefindfunctions` or `app`. Those are what `uridecodebin` is built
-# from, so the app started, drew its window, and then failed every open
-# with "could not probe media file". A partial plugin set is worse than
-# none: nothing warns, because the elements the startup probe checks for
-# were present.
-for dir in "$ROOT/.gst-local/root/usr/lib/gstreamer-1.0" \
-           /usr/lib/gstreamer-1.0 /usr/lib64/gstreamer-1.0 \
-           /usr/lib/x86_64-linux-gnu/gstreamer-1.0; do
-  [ -d "$dir" ] || continue
-  cp -Ln "$dir"/*.so "$APPDIR/usr/lib/gstreamer-1.0/" 2>/dev/null || true
+# Copying every plugin GStreamer ships is 261 files and 20MB, of which
+# this app can reach about 19. The rest is ASCII-art video sinks, DVD
+# readers, network streaming and 240 other things a trimmer never calls.
+#
+# The list below is derived, not guessed: every element named in a
+# pipeline string in this repo was passed to `gst-inspect-1.0` and its
+# providing plugin recorded. It is split into what the app names directly
+# and what `uridecodebin` autoplugs at runtime -- the second group is
+# invisible in the source and is exactly what a naive "copy what it
+# links against" would miss.
+GST_PLUGINS=(
+  # Core: element factories, typefinding, the decode autoplugger.
+  coreelements typefindfunctions playback app
+
+  # Containers, read and written.
+  isomp4 matroska avi
+
+  # Decode. libav supplies avdec_h264/h265/aac; vpx covers WebM.
+  libav vpx
+
+  # Video processing named by the export and preview pipelines.
+  videoconvertscale videorate videoparsersbad
+
+  # Audio: convert/resample, the `pitch` element for speed, parsers.
+  audioconvert audioresample soundtouch volume audioparsers
+
+  # Encoders. x264 is the shipping default; x265 is the HEVC preset.
+  x264 x265
+
+  # AAC encoders, in the order `available_aac_encoder` tries them.
+  fdkaac faac
+
+  # Tag reading, so a file with ID3 metadata still typefinds.
+  id3demux
+)
+
+# Search every plugin directory rather than stopping at the first.
+#
+# This loop used to `break`, so on a machine with a user-local prefix it
+# bundled only that -- plugins that looked sufficient but omitted
+# `coreelements` and `playback`, which is what `uridecodebin` is built
+# from. The app started and then failed every open with "could not probe
+# media file", and the startup capability probe could not catch it
+# because the elements it checks were all present.
+for name in "${GST_PLUGINS[@]}"; do
+  for dir in "$ROOT/.gst-local/root/usr/lib/gstreamer-1.0" \
+             /usr/lib/gstreamer-1.0 /usr/lib64/gstreamer-1.0 \
+             /usr/lib/x86_64-linux-gnu/gstreamer-1.0; do
+    src="$dir/libgst${name}.so"
+    if [ -e "$src" ]; then
+      cp -Ln "$src" "$APPDIR/usr/lib/gstreamer-1.0/" 2>/dev/null || true
+      break
+    fi
+  done
 done
 
 # The plugins `uridecodebin` cannot work without. Absent any one of them
@@ -89,17 +130,6 @@ for scanner in /usr/lib/gstreamer-1.0/gst-plugin-scanner \
   [ -x "$scanner" ] || continue
   install -Dm755 "$scanner" "$APPDIR/usr/lib/gstreamer-1.0/gst-plugin-scanner"
   break
-done
-
-# # Plugins whose own dependencies are not bundled
-#
-# The plugin set includes wrappers around libraries this app has no use
-# for — libaa, libcaca, wavpack. They fail to load and warn on every
-# launch about ASCII-art video sinks nobody asked for. Dropping them is
-# not an optimisation, it is removing a false alarm from a first-run log.
-for junk in aasink cacasink wavpack dvdread dv1394 shout2 gme openal \
-            vulkan libvisual; do
-  rm -f "$APPDIR/usr/lib/gstreamer-1.0/libgst${junk}"*.so 2>/dev/null || true
 done
 
 cat > "$APPDIR/AppRun" <<'RUN'
