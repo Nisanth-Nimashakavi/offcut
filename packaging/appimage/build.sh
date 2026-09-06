@@ -83,6 +83,20 @@ GST_PLUGINS=(
 
   # Tag reading, so a file with ID3 metadata still typefinds.
   id3demux
+
+  # # Audio output
+  #
+  # The playback pipeline ends its audio branch in `autoaudiosink`, which
+  # lives in `autodetect` and picks a real sink at runtime. Omitting these
+  # is what made the bundle fail with "failed to build pipeline from
+  # description" on every file that has an audio track -- the pipeline is
+  # parsed as one string, so a missing sink fails the whole graph
+  # including video.
+  #
+  # All three backends ship because `autodetect` chooses between them on
+  # the user's machine, not on this one: a bundle carrying only PulseAudio
+  # is silent on a bare-ALSA system.
+  autodetect pulseaudio alsa pipewire
 )
 
 # Search every plugin directory rather than stopping at the first.
@@ -109,13 +123,43 @@ done
 # the failure is a probe error at open time, far from its cause, so it is
 # worth failing the build here instead.
 for required in coreelements typefindfunctions playback app isomp4 \
-                videoconvertscale audioconvert audioresample libav; do
+                videoconvertscale audioconvert audioresample libav \
+                autodetect; do
   if [ ! -e "$APPDIR/usr/lib/gstreamer-1.0/libgst${required}.so" ]; then
     echo "build.sh: missing GStreamer plugin '${required}' -- the bundle" >&2
     echo "          would start but fail to open any file." >&2
     exit 1
   fi
 done
+
+# # Parse the real pipelines, not just count files
+#
+# The check above verifies plugin *files* exist, which is not the same as
+# the app's pipelines being constructible: `autoaudiosink` was missing
+# while every plugin in the list was present, and the bundle failed on
+# every file with an audio track. GStreamer parses a pipeline description
+# as one graph, so one absent element fails the whole thing -- video
+# included.
+#
+# These are the two descriptions the engine actually builds, reduced to
+# their element names. `gst-inspect-1.0` is used per element rather than
+# gst-launch so the check needs no media file and no display.
+if command -v gst-inspect-1.0 >/dev/null 2>&1; then
+  echo "==> verifying the bundled plugin set can build the app's pipelines"
+  for element in uridecodebin queue videoconvert appsink autoaudiosink volume \
+                 audioconvert audioresample pitch appsrc x264enc h264parse \
+                 mp4mux qtmux matroskamux filesink videorate; do
+    if ! GST_PLUGIN_SYSTEM_PATH="$APPDIR/usr/lib/gstreamer-1.0" \
+         GST_PLUGIN_PATH="$APPDIR/usr/lib/gstreamer-1.0" \
+         GST_REGISTRY="$(mktemp -u)" \
+         gst-inspect-1.0 "$element" >/dev/null 2>&1; then
+      echo "build.sh: the bundle cannot provide '${element}', which the" >&2
+      echo "          engine names in a pipeline description. Opening or" >&2
+      echo "          exporting would fail with 'failed to build pipeline'." >&2
+      exit 1
+    fi
+  done
+fi
 
 # # The plugin scanner
 #
