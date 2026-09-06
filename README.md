@@ -11,7 +11,7 @@ speed, volume and tone. Exports MP4, MOV or MKV carrying H.264 or HEVC.
 ## Install
 
 ### AppImage
-
+https://github.com/Nisanth-Nimashakavi/offcut/releases/tag/v0.1.0
 ```bash
 chmod +x Offcut-0.1.0-x86_64.AppImage
 ./Offcut-0.1.0-x86_64.AppImage
