@@ -32,9 +32,6 @@ curl -LO https://github.com/Nisanth-Nimashakavi/offcut/releases/latest/download/
 chmod +x Offcut-0.1.0-x86_64.AppImage && ./Offcut-0.1.0-x86_64.AppImage
 ```
 
-The AppImage bundles GStreamer, so it is the right choice if you do not want
-to install anything system-wide.
-
 ---
 
 ## Build from source
