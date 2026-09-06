@@ -1,5 +1,9 @@
 # Offcut
 
+[![Release](https://img.shields.io/github/v/release/Nisanth-Nimashakavi/offcut?label=release&color=0a6fd8)](https://github.com/Nisanth-Nimashakavi/offcut/releases/latest)
+[![Download](https://img.shields.io/badge/download-AppImage-0a6fd8)](https://github.com/Nisanth-Nimashakavi/offcut/releases/latest/download/Offcut-0.1.0-x86_64.AppImage)
+[![Licence](https://img.shields.io/badge/licence-MIT%20OR%20Apache--2.0-blue)](#licence)
+
 A single-source video trimmer. Open a file, choose the piece you want to keep,
 export it. **Your original file is never modified.**
 
@@ -11,10 +15,21 @@ speed, volume and tone. Exports MP4, MOV or MKV carrying H.264 or HEVC.
 ## Install
 
 ### AppImage
-https://github.com/Nisanth-Nimashakavi/offcut/releases/tag/v0.1.0
+
+Download the latest build from the
+[**releases page**](https://github.com/Nisanth-Nimashakavi/offcut/releases/latest),
+then:
+
 ```bash
 chmod +x Offcut-0.1.0-x86_64.AppImage
 ./Offcut-0.1.0-x86_64.AppImage
+```
+
+Or in one line:
+
+```bash
+curl -LO https://github.com/Nisanth-Nimashakavi/offcut/releases/latest/download/Offcut-0.1.0-x86_64.AppImage
+chmod +x Offcut-0.1.0-x86_64.AppImage && ./Offcut-0.1.0-x86_64.AppImage
 ```
 
 The AppImage bundles GStreamer, so it is the right choice if you do not want
